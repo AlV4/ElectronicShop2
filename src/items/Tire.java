@@ -28,7 +28,7 @@ public class Tire {
     }
 
     public String toString(){
-        return getWidth() + "/" + getAspectRatio() + " R" + getRadius() + " " + getProduser() + " price: "+getSellingPrice();
+        return getWidth() + "/" + getAspectRatio() + " R " + getRadius() + " " + getSeason() + " " + getProduser() + " price: "+getSellingPrice();
     }
 
     public int getWidth() {

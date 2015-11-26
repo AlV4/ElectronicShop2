@@ -80,7 +80,6 @@ public class Storage {
 
     }
 
-
     public void print(Tire [] tires){
         for (Tire tire: tires){
             if(tire != null){

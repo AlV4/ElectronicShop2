@@ -7,8 +7,8 @@ public class Transaction {
     private Tire tire;
     private Costumer costumer;
     private int amountOfItems;
-    private int sellingPrise;
-    private int purchasePrice;
+    private double sellingPrise;
+    private double purchasePrice;
     private Date dateOfTransaction;
 
     public Transaction() {
@@ -46,19 +46,19 @@ public class Transaction {
         this.amountOfItems = amountOfItems;
     }
 
-    public int getSellingPrise() {
+    public double getSellingPrise() {
         return sellingPrise;
     }
 
-    public void setSellingPrise(int sellingPrise) {
+    public void setSellingPrise(double sellingPrise) {
         this.sellingPrise = sellingPrise;
     }
 
-    public int getPurchasePrice() {
+    public double getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(int purchasePrice) {
+    public void setPurchasePrice(double purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 

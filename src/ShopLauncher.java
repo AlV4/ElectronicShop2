@@ -13,16 +13,18 @@ public class ShopLauncher {
         t = new Tire(195,65,15,Seasons.WINTER,Producers.Toyo,1200,1443);
         storage.putTireIntoStorage(t, 20);
 
-        storage.randomStorageInit(30);
-
-        storage.storageScanner();
-        storage.print(storage.getTires());
-        System.out.println();
-        storage.print(storage.getSortedByProducer()[Producers.Toyo.getId()]);
-        System.out.println();
-        storage.getPrices();
-        System.out.println();
-        storage.getAmounts();
+//        storage.randomStorageInit(10);
+//
+//        storage.storageScanner();
+//        storage.print(storage.getTires());
+//        System.out.println();
+//        storage.print(storage.getSortedBySeason()[Seasons.SUMMER.getId()]);
+//        storage.print(storage.getSortedBySeason()[Seasons.WINTER.getId()]);
+//        storage.print(storage.getSortedBySeason()[Seasons.ALLSEASONS.getId()]);
+//        System.out.println();
+//        storage.getPrices();
+//        System.out.println();
+//        storage.getAmounts();
 
     }
 }
