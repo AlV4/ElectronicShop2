@@ -6,23 +6,23 @@ import items.Tire;
 public class ShopLauncher {
     public static void main(String[] args) {
         Storage storage = new Storage();
-        storage.storageInit(4);
+        storage.storageInit(100);
 
-        Tire t = new Tire();
-        t.setWidth(215);
-        t.setAspectRatio(60);
-        t.setRadius(16);
-        t.setProduser(Producers.Hankook);
-        t.setSeason(Seasons.SUMMER);
-        t.setPurchasePrice(2000);
-        t.setSellingPrice(2300);
+        Tire t = new Tire(215,60,16,Seasons.SUMMER,Producers.Hankook,2000,2300);
+        storage.putTireIntoStorage(t, 30);
+        t = new Tire(195,65,15,Seasons.WINTER,Producers.Toyo,1200,1443);
+        storage.putTireIntoStorage(t, 20);
 
-        storage.putTireIntoStorage(t, 4);
+        storage.randomStorageInit(30);
 
-        for (Tire tire: storage.getTires()){
-            if(tire != null){
-                System.out.println(tire.toString());
-            }
-        }
+        storage.storageScanner();
+        storage.print(storage.getTires());
+        System.out.println();
+        storage.print(storage.getSortedByProducer()[Producers.Toyo.getId()]);
+        System.out.println();
+        storage.getPrices();
+        System.out.println();
+        storage.getAmounts();
+
     }
 }
