@@ -2,10 +2,11 @@ package data;
 
 import items.*;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Storage {
-    private Tire tire;
+
     private Tire []tires;
     private Tire [][]sortedBySeason;
     private Tire [][]sortedByProducer;
@@ -44,6 +45,25 @@ public class Storage {
                 putTireInArray(sortedByProducer[tire.getProduser().getId()], tire);
             }
         }
+    }
+
+    public Tire[] storeChecker(Tire tyre){
+        Tire []cashOfTires = new Tire[tires.length];
+        int count = 0;
+        int idx = 0;
+        for (Tire t : tires){
+
+            if(t != null && tyre.compareByAllParameters(t)){
+                cashOfTires[idx] = t;
+                idx++;
+                continue;
+            }
+            count++;
+        }
+        if (count == tires.length) {
+            return new Tire[0];
+        }
+        return Arrays.copyOf(cashOfTires, idx);
     }
 
     public void getPrices(){
@@ -134,14 +154,6 @@ public class Storage {
         t.setSellingPrice(t.getPurchasePrice()+t.getPurchasePrice()*0.3);
 
         return t;
-    }
-
-    public Tire getTire() {
-        return tire;
-    }
-
-    public void setTire(Tire tire) {
-        this.tire = tire;
     }
 
     public Tire[] getTires() {

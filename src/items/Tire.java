@@ -1,8 +1,5 @@
 package items;
 
-
-import java.util.Set;
-
 public class Tire {
 
     private int width;
@@ -29,6 +26,18 @@ public class Tire {
 
     public String toString(){
         return getWidth() + "/" + getAspectRatio() + " R " + getRadius() + " " + getSeason() + " " + getProduser() + " price: "+getSellingPrice();
+    }
+
+    public boolean compareByAllParameters(Tire tire){
+        if(tire != null&&
+                this.width == tire.getWidth()&&
+                this.aspectRatio == tire.getAspectRatio()&&
+                this.radius == tire.getRadius()&&
+                this.season.equals(tire.getSeason())&&
+                this.produser.equals(tire.getProduser())){
+            return true;
+        }
+        return false;
     }
 
     public int getWidth() {

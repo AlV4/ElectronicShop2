@@ -21,9 +21,16 @@ public class TireShop {
         this.storage = storage;
     }
 
-//    Here needs a method to clarify ability of storage to sale necessary tires!!!
+    public int checkPresence(Tire tire){
+        storage.storageScanner();
+        return 0;
+    }
 
-    public void buyTire(Costumer costumer, Tire tire, int amount){
+    public void buy(Costumer costumer, Tire tire, int amount){
+
+    }
+
+    public void createTransaction(Costumer costumer, Tire tire, int amount){
         transaction = new Transaction();
         transaction.setCostumer(costumer);
         transaction.setTire(tire);
