@@ -40,6 +40,24 @@ public class Tire {
         return false;
     }
 
+    public boolean compareBySize(Tire tire){
+        if(tire != null&&
+                this.width == tire.getWidth()&&
+                this.aspectRatio == tire.getAspectRatio()&&
+                this.radius == tire.getRadius()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean compareByProducer(Tire tire){
+        if(tire != null&&
+                this.produser.equals(tire.getProduser())){
+            return true;
+        }
+        return false;
+    }
+
     public int getWidth() {
         return width;
     }

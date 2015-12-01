@@ -14,6 +14,13 @@ public class Transaction {
     public Transaction() {
     }
 
+    @Override
+    public String toString() {
+        return "[ Tr. id: " +getId() + "; tire: " + tire.toString() +", " + getAmountOfItems()+ " items; costumer: "+
+                costumer.getFirstName() + ", " + costumer.getSecondName() + "; price: " + tire.getPurchasePrice() +
+                "; date: " + getDateOfTransaction() + " ]";
+    }
+
     public int getId() {
         return id;
     }

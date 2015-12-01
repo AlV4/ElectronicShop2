@@ -22,12 +22,23 @@ public class TireShop {
     }
 
     public int checkPresence(Tire tire){
-        storage.storageScanner();
-        return 0;
+
+        return storage.storeChecker(tire).length;
     }
 
     public void buy(Costumer costumer, Tire tire, int amount){
-
+       if(costumer != null && tire != null && amount >0) {
+           int itemsInStorage = checkPresence(tire);
+           if (itemsInStorage >= amount) {
+               createTransaction(costumer,tire,amount);
+               System.out.println(transaction);
+               storage.removeTiresFromTheStorage(transaction);
+               return;
+           }
+           System.out.println("Not enough items of "+tire.toString()+"! There is only " + itemsInStorage + " of them left.");
+           return;
+       }
+        System.out.println("Incorrect input data! Please check your input information!");
     }
 
     public void createTransaction(Costumer costumer, Tire tire, int amount){

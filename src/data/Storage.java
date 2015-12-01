@@ -52,7 +52,6 @@ public class Storage {
         int count = 0;
         int idx = 0;
         for (Tire t : tires){
-
             if(t != null && tyre.compareByAllParameters(t)){
                 cashOfTires[idx] = t;
                 idx++;
@@ -87,7 +86,7 @@ public class Storage {
 
             System.out.println("Total amount in the storage: " + amount + " tires.\n" +
                     "Categories:");
-
+        storageScanner();
         for (Tire[] first:sortedByProducer) {
             if(first != null) {
                 if (first[0] != null) {
@@ -124,6 +123,16 @@ public class Storage {
             return;
         }
         System.out.println("Sheck conditions. Something wrong.");
+    }
+
+    public void removeTiresFromTheStorage(Transaction t){
+        int amount = t.getAmountOfItems();
+        for (int i = 0; i < tires.length && amount > 0; i++) {
+            if(tires[i] != null && tires[i].compareByAllParameters(t.getTire())) {
+               tires[i] = null;
+                amount--;
+            }
+        }
     }
 
     public int firstFreePlace(Tire []tires){
