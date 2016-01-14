@@ -24,7 +24,14 @@ public class ShopLauncher {
         costumer.setSecondName("Black");
         TireShop shop = new TireShop();
         shop.shopInit(storage);
+        new TireShopUI(shop);
         shop.buy(costumer, t3, 3);
+        try{
+            Thread.sleep(5000);
+        }catch (Exception e){
+
+        }
+        shop.buy(costumer, t, 3);
         System.out.println();
         System.out.println(Arrays.asList(shop.getTransactions()));
 

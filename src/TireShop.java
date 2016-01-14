@@ -3,6 +3,7 @@ import items.Costumer;
 import items.Tire;
 import items.Transaction;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class TireShop {
@@ -10,8 +11,8 @@ public class TireShop {
     private Costumer costumer;
     private Tire tire;
     private Transaction transaction;
-
     private Transaction []transactions;
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy, EEEE HH:mm:ss");
 
     public TireShop() {
     }
@@ -48,7 +49,7 @@ public class TireShop {
         transaction.setAmountOfItems(amount);
         transaction.setPurchasePrice(tire.getPurchasePrice());
         transaction.setSellingPrise(tire.getSellingPrice());
-        transaction.setDateOfTransaction(new Date());
+        transaction.setDateOfTransaction(dateFormatter.format(new Date()));
         transaction.setId(firstFreePlace(transactions));
         transactions[transaction.getId()] = transaction;
     }

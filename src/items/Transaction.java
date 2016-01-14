@@ -1,7 +1,5 @@
 package items;
 
-import java.util.Date;
-
 public class Transaction {
     private int id;
     private Tire tire;
@@ -9,7 +7,7 @@ public class Transaction {
     private int amountOfItems;
     private double sellingPrise;
     private double purchasePrice;
-    private Date dateOfTransaction;
+    private String dateOfTransaction;
 
     public Transaction() {
     }
@@ -69,11 +67,11 @@ public class Transaction {
         this.purchasePrice = purchasePrice;
     }
 
-    public Date getDateOfTransaction() {
+    public String getDateOfTransaction() {
         return dateOfTransaction;
     }
 
-    public void setDateOfTransaction(Date dateOfTransaction) {
+    public void setDateOfTransaction(String dateOfTransaction) {
         this.dateOfTransaction = dateOfTransaction;
     }
 
