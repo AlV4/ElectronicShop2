@@ -4,6 +4,7 @@ import items.Tire;
 import items.Transaction;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class TireShop {
@@ -11,38 +12,31 @@ public class TireShop {
     private Costumer costumer;
     private Tire tire;
     private Transaction transaction;
-    private Transaction []transactions;
+    private ArrayList<Transaction> transactions;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy, EEEE HH:mm:ss");
 
     public TireShop() {
     }
 
-    public void shopInit(Storage storage){
-        transactions = new Transaction[storage.getTires().length];
+    public void shopInit(Storage storage) {
+        transactions = new ArrayList<>();
         this.storage = storage;
     }
 
-    public int checkPresence(Tire tire){
-
-        return storage.storeChecker(tire).length;
-    }
-
-    public void buy(Costumer costumer, Tire tire, int amount){
-       if(costumer != null && tire != null && amount >0) {
-           int itemsInStorage = checkPresence(tire);
-           if (itemsInStorage >= amount) {
-               createTransaction(costumer,tire,amount);
-               System.out.println(transaction);
-               storage.removeTiresFromTheStorage(transaction);
-               return;
-           }
-           System.out.println("Not enough items of "+tire.toString()+"! There is only " + itemsInStorage + " of them left.");
-           return;
-       }
+    public void buy(Costumer costumer, Tire tire, int amount) {
+        if (costumer != null && tire != null && amount > 0 && amount <= storage.getTires().size()) {
+            if (storage.isSuchTiresEnough(tire, amount)) {
+                createTransaction(costumer, tire, amount);
+                storage.removeTiresFromTheStorage(transaction);
+                return;
+            }
+            System.out.println("Not enough items of " + tire.toString() + "!");
+            return;
+        }
         System.out.println("Incorrect input data! Please check your input information!");
     }
 
-    public void createTransaction(Costumer costumer, Tire tire, int amount){
+    public void createTransaction(Costumer costumer, Tire tire, int amount) {
         transaction = new Transaction();
         transaction.setCostumer(costumer);
         transaction.setTire(tire);
@@ -50,18 +44,17 @@ public class TireShop {
         transaction.setPurchasePrice(tire.getPurchasePrice());
         transaction.setSellingPrise(tire.getSellingPrice());
         transaction.setDateOfTransaction(dateFormatter.format(new Date()));
-        transaction.setId(firstFreePlace(transactions));
-        transactions[transaction.getId()] = transaction;
+        transaction.setId(transactions.size());
+        transactions.add(transaction);
     }
 
-    public int firstFreePlace(Transaction []t){
-        for (int i = 0; i < t.length; i++){
-            if(t[i] == null){
-                return i;
+    public void print(ArrayList<?> list) {
+        for (Object o : list ) {
+            if (o != null) {
+                System.out.println(o.toString());
             }
         }
-        System.out.println("There is no free space in Transactions! Please extend the size of list!");
-        return -1;
+
     }
 
     public Storage getStorage() {
@@ -96,11 +89,11 @@ public class TireShop {
         this.transaction = transaction;
     }
 
-    public Transaction[] getTransactions() {
+    public ArrayList getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(Transaction[] transactions) {
+    public void setTransactions(ArrayList transactions) {
         this.transactions = transactions;
     }
 }

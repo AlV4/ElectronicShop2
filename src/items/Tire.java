@@ -28,18 +28,6 @@ public class Tire {
         return getWidth() + "/" + getAspectRatio() + " R " + getRadius() + " " + getSeason() + " " + getProduser() + " price: "+getSellingPrice();
     }
 
-    public boolean compareByAllParameters(Tire tire){
-        if(tire != null&&
-                this.width == tire.getWidth()&&
-                this.aspectRatio == tire.getAspectRatio()&&
-                this.radius == tire.getRadius()&&
-                this.season.equals(tire.getSeason())&&
-                this.produser.equals(tire.getProduser())){
-            return true;
-        }
-        return false;
-    }
-
     public boolean compareBySize(Tire tire){
         if(tire != null&&
                 this.width == tire.getWidth()&&
@@ -112,5 +100,30 @@ public class Tire {
 
     public void setSellingPrice(double sellingPrice) {
         this.sellingPrice = sellingPrice;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Tire tire = (Tire) o;
+
+        if (width != tire.width) return false;
+        if (aspectRatio != tire.aspectRatio) return false;
+        if (radius != tire.radius) return false;
+        if (season != tire.season) return false;
+        return produser == tire.produser;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = width;
+        result = 31 * result + aspectRatio;
+        result = 31 * result + radius;
+        result = 31 * result + season.hashCode();
+        result = 31 * result + produser.hashCode();
+        return result;
     }
 }
