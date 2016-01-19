@@ -1,8 +1,14 @@
 import data.Storage;
+import items.Costumer;
 import items.Producers;
+import items.Seasons;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
 public class TireShopUI {
@@ -27,7 +33,7 @@ public class TireShopUI {
     private JPanel createPanel(){
         JPanel panel = new JPanel(new GridBagLayout());
         JLabel textName = new JLabel("Input Your name, please: ");
-        JTextField nameTextField = new JTextField(20);
+        final JTextField nameTextField = new JTextField(20);
         GridBagConstraints cellSettings = new GridBagConstraints();
 
         cellSettings.gridx = 0;
@@ -63,12 +69,18 @@ public class TireShopUI {
             name.setFont(new Font(Font.SERIF, Font.BOLD, 18));
             panel.add((name), cellSettings);
         }
-        ButtonGroup radioButtonsGroup = new ButtonGroup();
-        JPanel radioButtonsSeasons = new JPanel(new GridLayout(names.length,0));
+         ButtonGroup radioButtonsGroup = new ButtonGroup();
+         JPanel radioButtonsSeasons = new JPanel(new GridLayout(Seasons.values().length,0));
 
-        String []seasons = {"Summer", "Winter", "All Seasons"};
-         for (String name : seasons){
-             JRadioButton radioButton = new JRadioButton(name);
+        Seasons [] seasonses = Seasons.values();
+         for (final Seasons s : seasonses){
+             JRadioButton radioButton = new JRadioButton(s.toString());
+             radioButton.addActionListener(new ActionListener() {
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                     shop.tire.setSeason(s);
+                 }
+             });
              radioButtonsGroup.add(radioButton);
              radioButtonsSeasons.add(radioButton);
          }
@@ -79,24 +91,24 @@ public class TireShopUI {
 
         panel.add(radioButtonsSeasons, cellSettings);
 
-        JComboBox<Producers> menuProducers = new JComboBox<>(Producers.values());
+        final JComboBox<Producers> producersMenu = new JComboBox<>(Producers.values());
         cellSettings.gridx = 1;
         cellSettings.fill = GridBagConstraints.HORIZONTAL;
 
-        panel.add(menuProducers, cellSettings);
+        panel.add(producersMenu, cellSettings);
 
         JPanel sizes = new JPanel(new GridLayout(0,3));
-        JComboBox<Integer> widthsMenu = new JComboBox<>();
-        for(int i = 0; i < storage.widths.length; i++){
+        final JComboBox<Integer> widthsMenu = new JComboBox<>();
+        for(int i = 0; i < storage.widths.length; i++) {
             widthsMenu.addItem(new Integer(storage.widths[i]));
         }
 
-        JComboBox<Integer> ratioMenu = new JComboBox<>();
+        final JComboBox<Integer> ratioMenu = new JComboBox<>();
         for(int i = 0; i < storage.ratio.length; i++){
             ratioMenu.addItem(new Integer(storage.ratio[i]));
         }
 
-        JComboBox<Integer> radiusesMenu = new JComboBox<>();
+        final JComboBox<Integer> radiusesMenu = new JComboBox<>();
         for(int i = 0; i < storage.radiuses.length; i++){
             radiusesMenu.addItem(new Integer(storage.radiuses[i]));
         }
@@ -107,8 +119,9 @@ public class TireShopUI {
         panel.add(sizes, cellSettings);
 
 
-        JTextField priceField = new JTextField("1000   $");
+        final JTextField priceField = new JTextField("0 $");
         priceField.setEditable(false);
+        priceField.setColumns(5);
         priceField.setFont(new Font("Verdana", Font.BOLD, 16));
 
         cellSettings.gridx = 3;
@@ -118,7 +131,7 @@ public class TireShopUI {
 
         panel.add(priceField, cellSettings);
 
-        JLabel amount = new JLabel("Amount: ");
+        final JLabel amount = new JLabel("Amount: ");
 
         cellSettings.gridx = 1;
         cellSettings.gridy = 3;
@@ -129,15 +142,46 @@ public class TireShopUI {
         panel.add(amount, cellSettings);
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        JFormattedTextField counter = new JFormattedTextField(numberFormat);
+        final JFormattedTextField counter = new JFormattedTextField(numberFormat);
         counter.setColumns(3);
+        counter.setValue(1);
         cellSettings.gridx = 2;
         cellSettings.anchor = GridBagConstraints.WEST;
 
-        panel.add(counter,cellSettings);
+        panel.add(counter, cellSettings);
 
         JButton button = new JButton("Buy");
         button.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                super.mouseEntered(e);
+                shop.tire.setProduser((Producers) producersMenu.getSelectedItem());
+                shop.tire.setWidth((int) widthsMenu.getSelectedItem());
+                shop.tire.setAspectRatio((int) ratioMenu.getSelectedItem());
+                shop.tire.setRadius((int) radiusesMenu.getSelectedItem());
+
+                System.out.println("You selected: " + shop.tire);
+
+                String price = " $";
+                price = shop.storageTireSearch(Integer.parseInt(counter.getText())) + price;
+
+                priceField.setText(price);
+            }
+        });
+
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Costumer costumer = new Costumer();
+                String nameSurname = nameTextField.getText();
+                costumer.setFirstName(nameSurname.substring(0, nameSurname.indexOf(" ")));
+                costumer.setSecondName(nameSurname.substring(nameSurname.indexOf(" ")));
+               shop.buy(costumer, shop.getTire(), Integer.parseInt(counter.getText()));
+                shop.print(shop.getTransactions());
+            }
+        });
 
         cellSettings.gridx = 3;
         cellSettings.gridy = 3;

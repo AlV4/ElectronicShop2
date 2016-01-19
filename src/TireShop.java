@@ -10,7 +10,7 @@ import java.util.Date;
 public class TireShop {
     private Storage storage;
     private Costumer costumer;
-    private Tire tire;
+    public Tire tire;
     private Transaction transaction;
     private ArrayList<Transaction> transactions;
     private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy, EEEE HH:mm:ss");
@@ -21,6 +21,7 @@ public class TireShop {
     public void shopInit(Storage storage) {
         transactions = new ArrayList<>();
         this.storage = storage;
+        this.tire = new Tire();
     }
 
     public void buy(Costumer costumer, Tire tire, int amount) {
@@ -47,6 +48,29 @@ public class TireShop {
         transaction.setId(transactions.size());
         transactions.add(transaction);
     }
+
+    public double storageTireSearch(int amount){
+        if(tire == null || !storage.getTires().contains(tire)){
+            System.out.println("No such tire or incorrect input!");
+            return 0;
+        }
+        int i = amount;
+        for(Tire t : storage.getTires()){
+            if(tire.equals(t)){
+                tire = t;
+                i--;
+                if (i == 0){
+                    break;
+                }
+            }
+        }
+        if(i == 0){
+            return tire.getSellingPrice() * amount;
+        }
+        System.out.println("Not enough such tires!");
+        return 0;
+    }
+
 
     public void print(ArrayList<?> list) {
         for (Object o : list ) {

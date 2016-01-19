@@ -13,7 +13,7 @@ public class Storage {
     private ArrayList<Tire> sortedByProducer;
 
     public int[] widths = {135, 145, 155, 165, 175, 185, 195, 205, 215, 225, 235, 245, 255, 265, 275, 285, 295};
-    public int[] ratio = {40, 50, 60, 70, 80, 90};
+    public int[] ratio = {40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90};
     public int[] radiuses = {13, 14, 15, 16, 17, 18};
 
     public Storage() {
@@ -83,7 +83,7 @@ public class Storage {
         return t;
     }
 
-    public ArrayList getTires() {
+    public ArrayList<Tire> getTires() {
         return tires;
     }
 
