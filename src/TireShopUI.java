@@ -34,6 +34,7 @@ public class TireShopUI {
         JPanel panel = new JPanel(new GridBagLayout());
         JLabel textName = new JLabel("Input Your name, please: ");
         final JTextField nameTextField = new JTextField(20);
+        nameTextField.setText("   ");
         GridBagConstraints cellSettings = new GridBagConstraints();
 
         cellSettings.gridx = 0;
@@ -70,10 +71,9 @@ public class TireShopUI {
             panel.add((name), cellSettings);
         }
          ButtonGroup radioButtonsGroup = new ButtonGroup();
-         JPanel radioButtonsSeasons = new JPanel(new GridLayout(Seasons.values().length,0));
+         JPanel radioButtonsSeasons = new JPanel(new GridLayout(storage.seasonsList.size(),0));
 
-        Seasons [] seasonses = Seasons.values();
-         for (final Seasons s : seasonses){
+         for (final Seasons s : storage.seasonsList){
              JRadioButton radioButton = new JRadioButton(s.toString());
              radioButton.addActionListener(new ActionListener() {
                  @Override
@@ -91,7 +91,10 @@ public class TireShopUI {
 
         panel.add(radioButtonsSeasons, cellSettings);
 
-        final JComboBox<Producers> producersMenu = new JComboBox<>(Producers.values());
+        final JComboBox<Producers> producersMenu = new JComboBox<>();
+        for(int i = 0; i < storage.producersList.size(); i++){
+            producersMenu.addItem(storage.producersList.get(i));
+        }
         cellSettings.gridx = 1;
         cellSettings.fill = GridBagConstraints.HORIZONTAL;
 
@@ -99,18 +102,18 @@ public class TireShopUI {
 
         JPanel sizes = new JPanel(new GridLayout(0,3));
         final JComboBox<Integer> widthsMenu = new JComboBox<>();
-        for(int i = 0; i < storage.widths.length; i++) {
-            widthsMenu.addItem(new Integer(storage.widths[i]));
+        for(int i = 0; i < storage.widthsList.size(); i++) {
+            widthsMenu.addItem(new Integer(storage.widthsList.get(i)));
         }
 
         final JComboBox<Integer> ratioMenu = new JComboBox<>();
-        for(int i = 0; i < storage.ratio.length; i++){
-            ratioMenu.addItem(new Integer(storage.ratio[i]));
+        for(int i = 0; i < storage.ratioList.size(); i++){
+            ratioMenu.addItem(new Integer(storage.ratioList.get(i)));
         }
 
         final JComboBox<Integer> radiusesMenu = new JComboBox<>();
-        for(int i = 0; i < storage.radiuses.length; i++){
-            radiusesMenu.addItem(new Integer(storage.radiuses[i]));
+        for(int i = 0; i < storage.radiusesList.size(); i++){
+            radiusesMenu.addItem(new Integer(storage.radiusesList.get(i)));
         }
         sizes.add(widthsMenu);
         sizes.add(ratioMenu);
@@ -161,8 +164,10 @@ public class TireShopUI {
                 shop.tire.setWidth((int) widthsMenu.getSelectedItem());
                 shop.tire.setAspectRatio((int) ratioMenu.getSelectedItem());
                 shop.tire.setRadius((int) radiusesMenu.getSelectedItem());
+                String selectedTire = shop.tire.toString();
+                selectedTire = selectedTire.substring(0, selectedTire.lastIndexOf("price"));
 
-                System.out.println("You selected: " + shop.tire);
+                System.out.println("You selected: " + selectedTire);
 
                 String price = " $";
                 price = shop.storageTireSearch(Integer.parseInt(counter.getText())) + price;

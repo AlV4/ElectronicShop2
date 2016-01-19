@@ -12,6 +12,12 @@ public class Storage {
     private ArrayList<Tire> sortedBySeason;
     private ArrayList<Tire> sortedByProducer;
 
+    public ArrayList<Integer> widthsList;
+    public ArrayList<Integer> ratioList;
+    public ArrayList<Integer> radiusesList;
+    public ArrayList<Producers> producersList;
+    public ArrayList<Seasons> seasonsList;
+
     public int[] widths = {135, 145, 155, 165, 175, 185, 195, 205, 215, 225, 235, 245, 255, 265, 275, 285, 295};
     public int[] ratio = {40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90};
     public int[] radiuses = {13, 14, 15, 16, 17, 18};
@@ -21,8 +27,11 @@ public class Storage {
 
     public void storageInit() {
         tires = new ArrayList<>();
-        sortedBySeason = new ArrayList<>();
-        sortedByProducer = new ArrayList<>();
+        widthsList = new ArrayList<>();
+        ratioList = new ArrayList<>();
+        radiusesList = new ArrayList<>();
+        producersList = new ArrayList<>();
+        seasonsList = new ArrayList<>();
     }
 
   public void getAmounts() {
@@ -34,6 +43,22 @@ public class Storage {
         if(tire != null && amount > 0) {
             while (amount > 0) {
                 tires.add(tire);
+                if(!widthsList.contains(tire.getWidth())){
+                    widthsList.add(tire.getWidth());
+                }
+                if(!ratioList.contains(tire.getAspectRatio())){
+                    ratioList.add(tire.getAspectRatio());
+                }
+                if(!radiusesList.contains(tire.getRadius())){
+                    radiusesList.add(tire.getRadius());
+                }
+                if(!producersList.contains(tire.getProduser())) {
+                    producersList.add(tire.getProduser());
+                }
+                if(!seasonsList.contains(tire.getSeason())) {
+                    seasonsList.add(tire.getSeason());
+                }
+
                 amount--;
             }
             System.out.println("Operation successfull!");
