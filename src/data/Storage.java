@@ -23,9 +23,10 @@ public class Storage {
     public int[] radiuses = {13, 14, 15, 16, 17, 18};
 
     public Storage() {
+        storageInit();
     }
 
-    public void storageInit() {
+    private void storageInit() {
         tires = new ArrayList<>();
         widthsList = new ArrayList<>();
         ratioList = new ArrayList<>();

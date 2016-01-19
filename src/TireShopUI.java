@@ -95,6 +95,7 @@ public class TireShopUI {
         for(int i = 0; i < storage.producersList.size(); i++){
             producersMenu.addItem(storage.producersList.get(i));
         }
+
         cellSettings.gridx = 1;
         cellSettings.fill = GridBagConstraints.HORIZONTAL;
 

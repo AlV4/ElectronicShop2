@@ -6,7 +6,6 @@ import items.Tire;
 public class ShopLauncher {
     public static void main(String[] args){
         Storage storage = new Storage();
-        storage.storageInit();
 
         TireShop shop = new TireShop();
         shop.shopInit(storage);
