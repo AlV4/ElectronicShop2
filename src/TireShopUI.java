@@ -34,41 +34,19 @@ public class TireShopUI {
         JPanel panel = new JPanel(new GridBagLayout());
         JLabel textName = new JLabel("Input Your name, please: ");
         final JTextField nameTextField = new JTextField(20);
-        nameTextField.setText("   ");
+        nameTextField.setText(" ");
         GridBagConstraints cellSettings = new GridBagConstraints();
 
-        cellSettings.gridx = 0;
-        cellSettings.gridy = 0;
-        cellSettings.gridheight = 1;
-        cellSettings.gridwidth = 2;
-        cellSettings.weightx = 1;
-        cellSettings.weighty = 1;
-        cellSettings.anchor = GridBagConstraints.NORTHEAST;
-        cellSettings.fill = GridBagConstraints.NONE;
-        cellSettings.insets = new Insets(50,0,0,0);
-        cellSettings.ipadx = 0;
-        cellSettings.ipady = 0;
+        panel.add(textName, new GridBagConstraints(0,0,2,1,1,1, GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(50,0,0,0), 0,0));
 
-        panel.add(textName, cellSettings);
-
-        cellSettings.gridx = 2;
-        cellSettings.anchor = GridBagConstraints.NORTHWEST;
-
-        panel.add(nameTextField, cellSettings);
-
-        cellSettings.gridx = 0;
-        cellSettings.gridy = 1;
-        cellSettings.gridwidth = 1;
-        cellSettings.anchor = GridBagConstraints.CENTER;
-        cellSettings.insets = new Insets(0,0,0,0);
+        panel.add(nameTextField, new GridBagConstraints(2,0,2,1,1,1, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, new Insets(50,0,0,0), 0,0));
 
         String names[] = {"Season", "Producer", "Size", "Price"};
 
         for (int i = 0; i < names.length; i++){
-            cellSettings.gridx = i;
-            JLabel name = new JLabel(names[i]);
+           JLabel name = new JLabel(names[i]);
             name.setFont(new Font(Font.SERIF, Font.BOLD, 18));
-            panel.add((name), cellSettings);
+            panel.add((name), new GridBagConstraints(i,1,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
         }
          ButtonGroup radioButtonsGroup = new ButtonGroup();
          JPanel radioButtonsSeasons = new JPanel(new GridLayout(storage.seasonsList.size(),0));
@@ -85,21 +63,14 @@ public class TireShopUI {
              radioButtonsSeasons.add(radioButton);
          }
 
-        cellSettings.gridx = 0;
-        cellSettings.gridy = 2;
-        cellSettings.fill = GridBagConstraints.VERTICAL;
-
-        panel.add(radioButtonsSeasons, cellSettings);
+       panel.add(radioButtonsSeasons, new GridBagConstraints(0,2,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.VERTICAL, new Insets(0,0,0,0), 0,0));
 
         final JComboBox<Producers> producersMenu = new JComboBox<>();
         for(int i = 0; i < storage.producersList.size(); i++){
             producersMenu.addItem(storage.producersList.get(i));
         }
 
-        cellSettings.gridx = 1;
-        cellSettings.fill = GridBagConstraints.HORIZONTAL;
-
-        panel.add(producersMenu, cellSettings);
+        panel.add(producersMenu, new GridBagConstraints(1,2,1,1,1,1, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 
         JPanel sizes = new JPanel(new GridLayout(0,3));
         final JComboBox<Integer> widthsMenu = new JComboBox<>();
@@ -119,8 +90,7 @@ public class TireShopUI {
         sizes.add(widthsMenu);
         sizes.add(ratioMenu);
         sizes.add(radiusesMenu);
-        cellSettings.gridx = 2;
-        panel.add(sizes, cellSettings);
+        panel.add(sizes, new GridBagConstraints(2,2,1,1,1,1, GridBagConstraints.NORTH, GridBagConstraints.HORIZONTAL, new Insets(0,0,0,0), 0,0));
 
 
         final JTextField priceField = new JTextField("0 $");
@@ -128,31 +98,18 @@ public class TireShopUI {
         priceField.setColumns(5);
         priceField.setFont(new Font("Verdana", Font.BOLD, 16));
 
-        cellSettings.gridx = 3;
-        cellSettings.gridy = 2;
-        cellSettings.anchor = GridBagConstraints.CENTER;
-        cellSettings.fill = GridBagConstraints.NONE;
-
-        panel.add(priceField, cellSettings);
+        panel.add(priceField, new GridBagConstraints(3,2,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
 
         final JLabel amount = new JLabel("Amount: ");
 
-        cellSettings.gridx = 1;
-        cellSettings.gridy = 3;
-        cellSettings.ipadx = 0;
-        cellSettings.ipady = 0;
-        cellSettings.anchor = GridBagConstraints.EAST;
-
-        panel.add(amount, cellSettings);
+        panel.add(amount, new GridBagConstraints(1,3,1,1,1,1, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
 
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         final JFormattedTextField counter = new JFormattedTextField(numberFormat);
         counter.setColumns(3);
         counter.setValue(1);
-        cellSettings.gridx = 2;
-        cellSettings.anchor = GridBagConstraints.WEST;
 
-        panel.add(counter, cellSettings);
+        panel.add(counter, new GridBagConstraints(2,3,1,1,1,1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
 
         JButton button = new JButton("Buy");
         button.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
@@ -189,15 +146,7 @@ public class TireShopUI {
             }
         });
 
-        cellSettings.gridx = 3;
-        cellSettings.gridy = 3;
-        cellSettings.ipadx = 150;
-        cellSettings.ipady = 30;
-        cellSettings.anchor = GridBagConstraints.CENTER;
-
-        panel.add(button, cellSettings);
-
-
+        panel.add(button, new GridBagConstraints(3,3,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,0,0),150,30));
 
         return panel;
     }
