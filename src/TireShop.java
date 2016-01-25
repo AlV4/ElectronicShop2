@@ -46,6 +46,7 @@ public class TireShop {
         transaction.setSellingPrise(tire.getSellingPrice());
         transaction.setDateOfTransaction(dateFormatter.format(new Date()));
         transaction.setId(transactions.size());
+        transaction.transactionUpdate();
         transactions.add(transaction);
     }
 
@@ -120,4 +121,6 @@ public class TireShop {
     public void setTransactions(ArrayList transactions) {
         this.transactions = transactions;
     }
+
+
 }

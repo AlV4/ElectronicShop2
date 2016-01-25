@@ -8,6 +8,7 @@ public class Transaction {
     private double sellingPrise;
     private double purchasePrice;
     private String dateOfTransaction;
+    public Object [] fields = new Object[7];
 
     public Transaction() {
     }
@@ -75,5 +76,9 @@ public class Transaction {
         this.dateOfTransaction = dateOfTransaction;
     }
 
+    public void transactionUpdate(){
+        Object [] fields = {id, tire, costumer, amountOfItems, sellingPrise, purchasePrice, dateOfTransaction};
+        this.fields = fields;
+    }
 
 }

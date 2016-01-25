@@ -2,8 +2,10 @@ import data.Storage;
 import items.Costumer;
 import items.Producers;
 import items.Seasons;
+import items.Transaction;
 
 import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,22 +13,40 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
-public class TireShopUI {
+public class TireShopUI extends JFrame{
+
     private TireShop shop;
     private Storage storage;
+    private JTable table = new JTable(new AbstractTableModel(){
+        @Override
+        public int getRowCount() {
+            return shop.getTransactions().size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return new Transaction().fields.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Transaction t = (Transaction) shop.getTransactions().get(rowIndex);
+            return t.fields[columnIndex];
+        }
+    } );
 
     public TireShopUI(TireShop shop){
         this.shop = shop;
         storage = shop.getStorage();
 
-        JFrame frame = new JFrame("Tire shop");
-        frame.setMinimumSize(new Dimension(800, 600));
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().add(createPanel());
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setVisible(true);
+        this.setTitle("Tire shop");
+        setMinimumSize(new Dimension(800, 600));
+        setResizable(false);
+        setLocationRelativeTo(null);
+        getContentPane().add(createPanel());
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        pack();
+        setVisible(true);
 
     }
 
@@ -109,7 +129,7 @@ public class TireShopUI {
         counter.setColumns(3);
         counter.setValue(1);
 
-        panel.add(counter, new GridBagConstraints(2,3,1,1,1,1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
+        panel.add(counter, new GridBagConstraints(2, 3, 1, 1, 1, 1, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         JButton button = new JButton("Buy");
         button.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
@@ -141,12 +161,16 @@ public class TireShopUI {
                 String nameSurname = nameTextField.getText();
                 costumer.setFirstName(nameSurname.substring(0, nameSurname.indexOf(" ")));
                 costumer.setSecondName(nameSurname.substring(nameSurname.indexOf(" ")));
-               shop.buy(costumer, shop.getTire(), Integer.parseInt(counter.getText()));
+                shop.buy(costumer, shop.getTire(), Integer.parseInt(counter.getText()));
                 shop.print(shop.getTransactions());
+                repaint();
+
             }
         });
 
-        panel.add(button, new GridBagConstraints(3,3,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,0,0),150,30));
+        panel.add(button, new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 150, 30));
+
+        panel.add(table, new GridBagConstraints(0, 4, 4, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
         return panel;
     }
