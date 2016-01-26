@@ -4,6 +4,8 @@ import items.Producers;
 import items.Seasons;
 import items.Tire;
 
+import java.awt.*;
+
 public class ShopLauncher {
     public static void main(String[] args){
         Storage storage = new Storage();
@@ -22,9 +24,14 @@ public class ShopLauncher {
 
         shop.print(storage.getTires());
 
+        SplashScreen screen = SplashScreen.getSplashScreen();
+        try {
+            Thread.sleep(4000);
+        }catch (InterruptedException e){
 
+        }
         TireShopUI shopUI = new  TireShopUI(shop);
-
+//        screen.close();
 
     }
 }
