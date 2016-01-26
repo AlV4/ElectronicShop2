@@ -25,7 +25,7 @@ public class Tire {
     }
 
     public String toString(){
-        return getWidth() + "/" + getAspectRatio() + " R " + getRadius()  + " " + getProduser() + " " + getSeason() + " price: " + getSellingPrice();
+        return getWidth() + "/" + getAspectRatio() + " R " + getRadius()  + " " + getProduser() + " " + getSeason();
     }
 
     public boolean compareBySize(Tire tire){

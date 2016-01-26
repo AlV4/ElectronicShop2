@@ -13,7 +13,7 @@ public class TireShop {
     public Tire tire;
     private Transaction transaction;
     private ArrayList<Transaction> transactions;
-    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy, EEEE HH:mm:ss");
+    private SimpleDateFormat dateFormatter = new SimpleDateFormat("dd MMMM yyyy, EE HH:mm:ss");
 
     public TireShop() {
     }
@@ -114,7 +114,7 @@ public class TireShop {
         this.transaction = transaction;
     }
 
-    public ArrayList getTransactions() {
+    public ArrayList <Transaction> getTransactions() {
         return transactions;
     }
 

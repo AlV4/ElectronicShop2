@@ -5,57 +5,126 @@ import items.Seasons;
 import items.Transaction;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.text.NumberFormat;
 
 public class TireShopUI extends JFrame{
 
     private TireShop shop;
     private Storage storage;
-    private JTable table = new JTable(new AbstractTableModel(){
-        @Override
-        public int getRowCount() {
-            return shop.getTransactions().size();
-        }
-
-        @Override
-        public int getColumnCount() {
-            return new Transaction().fields.length;
-        }
-
-        @Override
-        public Object getValueAt(int rowIndex, int columnIndex) {
-            Transaction t = (Transaction) shop.getTransactions().get(rowIndex);
-            return t.fields[columnIndex];
-        }
-    } );
+    private String [] columns = {"ID", "Tire", "Costumer", "Amount", "Sell", "Buy", "Date"};
+    private JTable table;
+    private TableModel model;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private boolean isVisibleOrder;
 
     public TireShopUI(TireShop shop){
         this.shop = shop;
         storage = shop.getStorage();
 
-        this.setTitle("Tire shop");
-        setMinimumSize(new Dimension(800, 600));
+        setJMenuBar(createMenu());
+        setTitle("Tire shop");
+        setMinimumSize(new Dimension(1200, 800));
         setResizable(false);
         setLocationRelativeTo(null);
         getContentPane().add(createPanel());
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
-        setVisible(true);
+        setVisible(isVisibleOrder);
 
+        JFrame tableFrame = new JFrame("Tire shop");
+        tableFrame.setJMenuBar(createMenu());
+        tableFrame.setMinimumSize(new Dimension(1200, 800));
+        tableFrame.setResizable(false);
+        tableFrame.setLocationRelativeTo(null);
+        tableFrame.getContentPane().add(createPanelWithTable());
+        tableFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        tableFrame.pack();
+        tableFrame.setVisible(true);
+    }
+    private JMenuBar createMenu(){
+        menuBar = new JMenuBar();
+        menuBar.setSize(1200, 20);
+        menu = new JMenu("File");
+        JButton buy = new JButton("Buy");
+        buy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(true);
+            }
+        });
+        menu.add(buy);
+        menuBar.add(menu);
+        return menuBar;
+    }
+
+    private JPanel createPanelWithTable(){
+        JPanel panel = new JPanel(new GridBagLayout());
+        model = new TableModel() {
+
+
+            @Override
+            public int getRowCount() {
+                return shop.getTransactions().size();
+            }
+
+            @Override
+            public int getColumnCount() {
+                return columns.length;
+            }
+
+            @Override
+            public String getColumnName(int columnIndex) {
+                return columns[columnIndex];
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return new Transaction().fields.getClass();
+            }
+
+            @Override
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return false;
+            }
+
+            @Override
+            public Object getValueAt(int rowIndex, int columnIndex) {
+                return shop.getTransactions().get(rowIndex).fields[columnIndex];
+            }
+
+            @Override
+            public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+
+            }
+
+            @Override
+            public void addTableModelListener(TableModelListener l) {
+
+            }
+
+            @Override
+            public void removeTableModelListener(TableModelListener l) {
+
+            }
+        };
+
+        table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        panel.add(scrollPane, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        return panel;
     }
 
     private JPanel createPanel(){
         JPanel panel = new JPanel(new GridBagLayout());
-        JLabel textName = new JLabel("Input Your name, please: ");
+        final JLabel textName = new JLabel("Input Your name, please: ");
         final JTextField nameTextField = new JTextField(20);
         nameTextField.setText(" ");
-        GridBagConstraints cellSettings = new GridBagConstraints();
 
         panel.add(textName, new GridBagConstraints(0,0,2,1,1,1, GridBagConstraints.NORTHEAST, GridBagConstraints.NONE, new Insets(50,0,0,0), 0,0));
 
@@ -118,7 +187,7 @@ public class TireShopUI extends JFrame{
         priceField.setColumns(5);
         priceField.setFont(new Font("Verdana", Font.BOLD, 16));
 
-        panel.add(priceField, new GridBagConstraints(3,2,1,1,1,1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0,0,0,0), 0,0));
+        panel.add(priceField, new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 0, 0));
 
         final JLabel amount = new JLabel("Amount: ");
 
@@ -143,14 +212,13 @@ public class TireShopUI extends JFrame{
                 shop.tire.setAspectRatio((int) ratioMenu.getSelectedItem());
                 shop.tire.setRadius((int) radiusesMenu.getSelectedItem());
                 String selectedTire = shop.tire.toString();
-                selectedTire = selectedTire.substring(0, selectedTire.lastIndexOf("price"));
 
                 System.out.println("You selected: " + selectedTire);
 
                 String price = " $";
                 price = shop.storageTireSearch(Integer.parseInt(counter.getText())) + price;
-
                 priceField.setText(price);
+
             }
         });
 
@@ -163,14 +231,14 @@ public class TireShopUI extends JFrame{
                 costumer.setSecondName(nameSurname.substring(nameSurname.indexOf(" ")));
                 shop.buy(costumer, shop.getTire(), Integer.parseInt(counter.getText()));
                 shop.print(shop.getTransactions());
-                repaint();
+                table.tableChanged(new TableModelEvent(model, TableModelEvent.ALL_COLUMNS));
+                setVisible(false);
 
             }
         });
 
         panel.add(button, new GridBagConstraints(3, 3, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.NONE, new Insets(0, 0, 0, 0), 150, 30));
 
-        panel.add(table, new GridBagConstraints(0, 4, 4, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
 
         return panel;
     }

@@ -1,4 +1,5 @@
 import data.Storage;
+import items.Costumer;
 import items.Producers;
 import items.Seasons;
 import items.Tire;
@@ -16,6 +17,8 @@ public class ShopLauncher {
         storage.putTireIntoStorage(t2, 4);
         Tire t3 = new Tire(185,65,14,Seasons.ALLSEASONS,Producers.Matador,1000,1253);
         storage.putTireIntoStorage(t3, 4);
+
+        shop.buy(new Costumer("John", "Smith"), t3, 1);
 
         shop.print(storage.getTires());
 
