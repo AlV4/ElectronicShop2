@@ -44,6 +44,9 @@ public class TireShop {
         transaction.setAmountOfItems(amount);
         transaction.setPurchasePrice(tire.getPurchasePrice());
         transaction.setSellingPrise(tire.getSellingPrice());
+        double sellingSum = transaction.getSellingPrise() * transaction.getAmountOfItems();
+        double discountSum = sellingSum * countDiscount(transaction.getSellingPrise() * transaction.getAmountOfItems());
+        transaction.setTransactionSum(sellingSum - discountSum);
         transaction.setDateOfTransaction(dateFormatter.format(new Date()));
         transaction.setId(transactions.size());
         transaction.transactionUpdate();

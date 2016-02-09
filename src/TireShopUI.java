@@ -19,7 +19,7 @@ public class TireShopUI extends JFrame{
 
     private TireShop shop;
     private Storage storage;
-    private String [] columns = {"ID", "Tire", "Costumer", "Amount", "Sell", "Buy", "Date"};
+    private String [] columns = {"ID", "Tire", "Costumer", "Amount", "Sell", "Buy", "Total sum", "Date"};
     private JTable table;
     private TableModel model;
     private JMenuBar menuBar;
@@ -118,7 +118,7 @@ public class TireShopUI extends JFrame{
         };
 
         table = new JTable(model);
-        table.getColumnModel().getColumn(6).setPreferredWidth(300);
+        table.getColumnModel().getColumn(7).setPreferredWidth(300);
         JScrollPane scrollPane = new JScrollPane(table);
         panel.add(scrollPane, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         return panel;
@@ -220,7 +220,12 @@ public class TireShopUI extends JFrame{
                 System.out.println("You selected: " + selectedTire);
 
                 String price = " $";
-                price = shop.storageTireSearch(Integer.parseInt(counter.getText())) + price;
+                try {
+                    price = shop.storageTireSearch(Integer.parseInt(counter.getText())) + price;
+                }catch (NumberFormatException nfe){
+                    price = "0 $";
+                    counter.setValue(0);
+                }
                 priceField.setText(price);
 
             }

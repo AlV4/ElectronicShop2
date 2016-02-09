@@ -7,8 +7,9 @@ public class Transaction {
     private int amountOfItems;
     private double sellingPrise;
     private double purchasePrice;
+    private double transactionSum;
     private String dateOfTransaction;
-    public Object [] fields = new Object[7];
+    public Object [] fields = new Object[8];
 
     public Transaction() {
     }
@@ -68,6 +69,14 @@ public class Transaction {
         this.purchasePrice = purchasePrice;
     }
 
+    public double getTransactionSum() {
+        return transactionSum;
+    }
+
+    public void setTransactionSum(double transactionSum) {
+        this.transactionSum = transactionSum;
+    }
+
     public String getDateOfTransaction() {
         return dateOfTransaction;
     }
@@ -77,7 +86,7 @@ public class Transaction {
     }
 
     public void transactionUpdate(){
-        Object [] fields = {id, tire, costumer, amountOfItems, sellingPrise, purchasePrice, dateOfTransaction};
+        Object [] fields = {id, tire, costumer, amountOfItems, sellingPrise, purchasePrice,transactionSum, dateOfTransaction};
         this.fields = fields;
     }
 
