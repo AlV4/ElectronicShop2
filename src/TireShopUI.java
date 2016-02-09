@@ -9,7 +9,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
 public class TireShopUI extends JFrame{
@@ -115,6 +118,7 @@ public class TireShopUI extends JFrame{
         };
 
         table = new JTable(model);
+        table.getColumnModel().getColumn(6).setPreferredWidth(300);
         JScrollPane scrollPane = new JScrollPane(table);
         panel.add(scrollPane, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         return panel;

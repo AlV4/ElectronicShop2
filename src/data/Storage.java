@@ -63,6 +63,7 @@ public class Storage {
                 amount--;
             }
             System.out.println("Operation successfull!");
+            return;
         }
         System.out.println("Something wrong, check your input data.");
     }

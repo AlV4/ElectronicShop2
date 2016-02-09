@@ -73,6 +73,19 @@ public class TireShop {
     }
 
 
+    public double countDiscount(double orderSum){
+        if( orderSum < 0){
+            throw new IllegalArgumentException("Input data can't be less than zero!");
+        }
+        if(orderSum >= 500 && orderSum < 1000){
+            return 0.05;
+        }else if(orderSum >= 1000 ){
+            return 0.1;
+        }
+        return 0;
+    }
+
+
     public void print(ArrayList<?> list) {
         for (Object o : list ) {
             if (o != null) {
